@@ -14,9 +14,12 @@ ${contrasena}    RAHnaturgy536
 Descargar factura Naturgy
     Open Browser    ${Naturgy_SRL}    Chrome
     Maximize Browser Window
-    #Click Element    xpath=//button[contains(text(), 'x')]
+    #cerrando popup
     Wait Until Element Is Visible    css=#popmake-61817 > button    timeout=10s
-    # Hacer clic en el botón para cerrarlo
     Click Element    css=#popmake-61817 > button
-   
-    #Close Browser
+
+    #entrando en la oficina virtual
+    ${url}=    Get Element Attribute    xpath=//a[span[text()="Oficina Virtual"]]    href
+    Go To    ${url}
+    
+    Close Browser
