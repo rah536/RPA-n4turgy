@@ -6,7 +6,7 @@ Resource    ../Resources/config.robot
 Resource    ../Resources/naturgy_keywords.robot
 
 *** Variables ***
-${usuario}    raherrera@gmail.com
+${usuario}    raherrera536@gmail.com
 ${contrasena}    RAHnaturgy536
 
 *** Tasks ***
@@ -19,7 +19,7 @@ Descargar factura Naturgy
     Wait Until Element Is Visible    css=#popmake-61817 > button    timeout=10s
     Click Element    css=#popmake-61817 > button
 
-    #entrando en la oficina virtual
+    #entrando en la oficina virtual -obtiene url dentro del <a>#
     ${url}=    Get Element Attribute    xpath=//a[span[text()="Oficina Virtual"]]    href
     Go To    ${url}
     
@@ -30,5 +30,8 @@ Descargar factura Naturgy
     Input Text   css=input[data-testid="unifiedAuth.form.email"]    ${usuario}
     Input Text    css=input[data-testid="unifiedAuth.form.password"]    ${contrasena}
 
+    #click en ingresar#
+    Click Button    css=button[data-testid="unifiedAuth.submit"]
 
-    Close Browser
+
+    #Close Browser
