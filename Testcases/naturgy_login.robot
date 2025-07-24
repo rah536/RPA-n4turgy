@@ -14,6 +14,9 @@ ${contrasena}    RAHnaturgy536
 Descargar factura Naturgy
     Open Browser    ${Naturgy_SRL}    Chrome
     Maximize Browser Window
-    #${ruta_captura}=    Capture Page Screenshot    google_screenshot.png
-    #Log    Captura de pantalla guardada en: ${ruta_captura}
+    #Click Element    xpath=//button[contains(text(), 'x')]
+    Wait Until Element Is Visible    css=#popmake-61817 > button    timeout=10s
+    # Hacer clic en el botón para cerrarlo
+    Click Element    css=#popmake-61817 > button
+   
     #Close Browser
