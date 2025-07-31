@@ -2,6 +2,7 @@
 
 Library    SeleniumLibrary
 Library    string
+Library    RPA.FTP
 Resource    ../Resources/config.robot
 Resource    ../Resources/naturgy_keywords.robot
 
@@ -33,5 +34,10 @@ Descargar factura Naturgy
     #click en ingresar#
     Click Button    css=button[data-testid="unifiedAuth.submit"]
 
+    #click en el enlace de descarga de la factura#
+    Wait Until Element Is Visible    xpath=//button[.//div[text()="Descargar factura"]]    timeout=10s
+    Click Button    xpath=//button[.//div[text()="Descargar factura"]]
+    Esperar Que Archivo Se Descargue    factura.pdf
 
-    #Close Browser
+    Sleep    10s
+    Close Browser
