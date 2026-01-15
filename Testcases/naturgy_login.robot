@@ -6,6 +6,7 @@ Library    RPA.FTP
 Resource    ../Resources/config.robot
 Resource    ../Resources/naturgy_keywords.robot
 Resource    ../Resources/secrets.robot
+Library     ../Resources/email_lib.py
 
 
 *** Tasks ***

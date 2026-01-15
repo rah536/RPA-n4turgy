@@ -98,12 +98,15 @@ Verificar Y Obtener Archivo
     ${ruta_completa}=    Join Path    ${directorio}    ${nombre_archivo}
     RETURN    ${ruta_completa}
 Notificacion Al Usuario
-    [Arguments]    ${archivo_pdf}
-
-    IF  $archivo_pdf == 'fallo_descarga'
-        Log    Se envia notificación al usuario, no se pudo descargar la factura de Naturgy.
-
-        RETURN
-    END
-
-    Log    Notificación enviada al usuario sobre la descarga de la factura.
+    [Arguments]    ${ruta_adjunto}
+    
+    Log    Enviando correo a ${EMAIL_USER} con adjunto: ${ruta_adjunto}
+    
+    # Esta es la función que creamos en el archivo Python
+    Enviar Correo Gmail Nativo
+    ...    usuario=${EMAIL_USER}
+    ...    password=${EMAIL_PASS}
+    ...    destinatario=${EMAIL_USER}
+    ...    asunto=Robot Naturgy: Tu Factura Mensual
+    ...    cuerpo=Hola, adjunto encontrarás la factura descargada automáticamente. Saludos.
+    ...    ruta_adjunto=${ruta_adjunto}
