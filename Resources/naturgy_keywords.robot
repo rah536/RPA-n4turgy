@@ -57,17 +57,20 @@ Log in Naturgy
 
     EXCEPT   AS    ${error}
         Log    Ocurrió un error: ${error}
+        Fail    No se pudo iniciar sesión, se detiene la ejecución.
     END
     RETURN
 
 Descargar Factura Naturgy
     TRY
         #click en el enlace de descarga de la factura
+        Sleep   3s
         Wait Until Element Is Visible    css=button[data-testid="cuentas.resumen.billsList.billsListDownloadBill"]    timeout=10s
         Click Button    css=button[data-testid="cuentas.resumen.billsList.billsListDownloadBill"]
         Sleep    5s
-        Confirmar Archivo Descargado    ${RUTA_DESCARGAS}    238050_
+        ${archivo_pdf}=    Confirmar Archivo Descargado    ${RUTA_DESCARGAS}    238050_
         Close Browser
+        RETURN    ${archivo_pdf}
     EXCEPT    AS    ${error}
         Log    Ocurrió un error al descargar: ${error}
         Close Browser
@@ -77,16 +80,30 @@ Cerrar Popup
     #cerrando popup
     Wait Until Element Is Visible    css=#popmake-61817 > button    timeout=10s
     Click Element    css=#popmake-61817 > button
+    Log   Popup cerrado con éxito!
 
 Confirmar Archivo Descargado
     [Arguments]    ${directorio}    ${patron_fijo}
     ${patron_completo}=    Set Variable    ${patron_fijo}*.pdf
-    Wait Until Keyword Succeeds    30s    2s    Verificar Existencia Por Patron    ${directorio}    ${patron_completo}
+    ${ruta_archivo}=    Wait Until Keyword Succeeds    30s    2s    Verificar Y Obtener Archivo    ${directorio}    ${patron_completo}
+    Log    Archivo encontrado en: ${ruta_archivo}
+    RETURN    ${ruta_archivo}
 
-Verificar Existencia Por Patron
+
+Verificar Y Obtener Archivo
     [Arguments]    ${directorio}    ${patron}
     @{archivos}=    List Files In Directory    ${directorio}    ${patron}
     Should Not Be Empty    @{archivos}    No se encontró el archivo ${patron} en ${directorio}
-    
+    ${nombre_archivo}=    Set Variable    ${archivos}[0]
+    ${ruta_completa}=    Join Path    ${directorio}    ${nombre_archivo}
+    RETURN    ${ruta_completa}
 Notificacion Al Usuario
+    [Arguments]    ${archivo_pdf}
+
+    IF  $archivo_pdf == 'fallo_descarga'
+        Log    Se envia notificación al usuario, no se pudo descargar la factura de Naturgy.
+
+        RETURN
+    END
+
     Log    Notificación enviada al usuario sobre la descarga de la factura.
