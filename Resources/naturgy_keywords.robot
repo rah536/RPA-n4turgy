@@ -4,6 +4,8 @@ Library    SeleniumLibrary
 Library    string
 Library    OperatingSystem
 Resource    config.robot
+Resource    ../Resources/secrets.robot
+Library     ../Resources/email_lib.py
 
 *** Variables ***
 ${DOWNLOAD_DIR}    ${OUTPUT DIR}${/}downloads
@@ -99,9 +101,7 @@ Verificar Y Obtener Archivo
     RETURN    ${ruta_completa}
 Notificacion Al Usuario
     [Arguments]    ${ruta_adjunto}
-    
     Log    Enviando correo a ${EMAIL_USER} con adjunto: ${ruta_adjunto}
-    
     # Esta es la función que creamos en el archivo Python
     Enviar Correo Gmail Nativo
     ...    usuario=${EMAIL_USER}

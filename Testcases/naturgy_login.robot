@@ -12,7 +12,7 @@ Library     ../Resources/email_lib.py
 *** Tasks ***
 Notificar Factura Naturgy Al usuario
     [Documentation]    Tarea para notificar la descarga de la factura de Naturgy
-    Log in Naturgy    &{DATOS_NATURGY}
+    Log in Naturgy    ${DATOS_NATURGY}
     ${archivo_pdf}=    Descargar Factura Naturgy
     IF    $archivo_pdf != $None
         Notificacion Al Usuario    ${archivo_pdf}

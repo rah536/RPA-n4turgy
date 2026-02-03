@@ -3,6 +3,10 @@ import os
 from email.message import EmailMessage
 
 def enviar_correo_gmail_nativo(usuario, password, destinatario, asunto, cuerpo, ruta_adjunto):
+    
+    if password:
+        password = password.strip().replace(" ", "")
+        
     msg = EmailMessage()
     msg['Subject'] = asunto
     msg['From'] = usuario
